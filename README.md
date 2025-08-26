@@ -21,6 +21,7 @@ Visit the live website: [www.artryazanov.com](https://www.artryazanov.com)
   - Hover animations on all interactive elements
   - Theme toggle with sun/moon icons
 - **Project Showcase**: Displays personal projects with descriptions and links
+- **SSI Partials**: Shared CSS is included via Nginx SSI to avoid duplication across pages
 
 ## Technologies Used
 
@@ -32,6 +33,26 @@ Visit the live website: [www.artryazanov.com](https://www.artryazanov.com)
 - Google Fonts (Orbitron, Roboto, Pacifico, Montserrat, Open Sans)
 - Font Awesome Icons
 - SVG for background patterns
+- Nginx Server-Side Includes (SSI) for partials
+
+## Server-Side Includes (SSI)
+
+This site uses Nginx Server-Side Includes (SSI) to share common code between pages.
+
+- Shared CSS is included in each language page via an SSI directive in the <head>:
+
+```html
+<style>
+  <!--# include virtual="/_partials/style.css" -->
+</style>
+```
+
+- Nginx must have SSI enabled for HTML:
+
+```nginx
+ssi on;
+ssi_types text/html;
+```
 
 ## Project Structure
 
@@ -42,6 +63,7 @@ Visit the live website: [www.artryazanov.com](https://www.artryazanov.com)
 - `index_zh.html` - Chinese version
 - `index_es.html` - Spanish version
 - `index_ar.html` - Arabic version (with RTL support)
+- `_partials/style.css` - Shared stylesheet included in each page via SSI
 - `logo.png` - Profile picture
 - Various favicon files for different platforms
 
@@ -54,7 +76,7 @@ The website automatically detects the user's browser language and redirects to t
 - Thai (TH)
 - Chinese (中文)
 - Spanish (ES)
-- Arabic (AR) - with Right-to-Left (RTL) support
+- Arabic (AR)—with Right-to-Left (RTL) support
 
 Users can manually switch between languages using the language switcher in the top-right corner (top-left for Arabic).
 
@@ -86,7 +108,7 @@ The theme system includes:
 2. Open `index.html` in your web browser
 3. The site will automatically redirect to the appropriate language version based on your browser settings
 
-No server-side processing is required as this is a static website.
+To use SSI includes, serve the site via Nginx with SSI enabled (see Docker setup below). Opening HTML files directly via file:// will not process SSI directives.
 
 ## Customization
 
