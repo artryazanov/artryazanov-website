@@ -21,7 +21,7 @@ Visit the live website: [www.artryazanov.com](https://www.artryazanov.com)
   - Hover animations on all interactive elements
   - Theme toggle with sun/moon icons
 - **Project Showcase**: Displays personal projects with descriptions and links
-- **SSI Partials**: Shared CSS is included via Nginx SSI to avoid duplication across pages
+- **SSI Partials**: Shared CSS and JavaScript are included via Nginx SSI to avoid duplication across pages
 
 ## Technologies Used
 
@@ -30,7 +30,7 @@ Visit the live website: [www.artryazanov.com](https://www.artryazanov.com)
 - JavaScript (Vanilla)
   - LocalStorage for theme persistence
   - Media queries for system theme detection
-- Google Fonts (Orbitron, Roboto, Pacifico, Montserrat, Open Sans)
+- Google Fonts (Orbitron, Roboto, Pacifico, Montserrat, Open Sans, Cairo, Noto Sans SC, Sarabun)
 - Font Awesome Icons
 - SVG for background patterns
 - Nginx Server-Side Includes (SSI) for partials
@@ -42,9 +42,13 @@ This site uses Nginx Server-Side Includes (SSI) to share common code between pag
 - Shared CSS is included in each language page via an SSI directive in the <head>:
 
 ```html
-<style>
-  <!--# include virtual="/_partials/style.css" -->
-</style>
+<!--# include virtual="/_partials/style.shtml" -->
+```
+
+- Shared JavaScript is included at the end of the body:
+
+```html
+<!--# include virtual="/_partials/script.shtml" -->
 ```
 
 - Nginx must have SSI enabled for HTML:
@@ -63,8 +67,9 @@ ssi_types text/html;
 - `index_zh.html` - Chinese version
 - `index_es.html` - Spanish version
 - `index_ar.html` - Arabic version (with RTL support)
-- `_partials/style.css` - Shared stylesheet included in each page via SSI
-- `logo.png` - Profile picture
+- `_partials/style.shtml` - Shared stylesheet included in each page via SSI
+- `_partials/script.shtml` - Shared JavaScript included in each page via SSI
+- `logo-300x300.png` - Profile picture
 - Various favicon files for different platforms
 
 ## Language Support
@@ -108,7 +113,7 @@ The theme system includes:
 2. Open `index.html` in your web browser
 3. The site will automatically redirect to the appropriate language version based on your browser settings
 
-To use SSI includes, serve the site via Nginx with SSI enabled (see Docker setup below). Opening HTML files directly via file:// will not process SSI directives.
+To see SSI includes (style.shtml and script.shtml) rendered, serve the site via Nginx with SSI enabled (ssi on; ssi_types text/html;) or any SSI-enabled server. Opening HTML files directly via file:// will not process SSI directives.
 
 ## Customization
 
@@ -116,7 +121,7 @@ To use SSI includes, serve the site via Nginx with SSI enabled (see Docker setup
 
 Edit the following sections in each language file:
 
-- Profile picture: Replace `logo.png` with your own image
+- Profile picture: Replace `logo-300x300.png` with your own image
 - Name: Update the `<h1 class="name">` element
 - Bio: Update the `<p class="bio">` element
 - Social links: Modify the links in the `<div class="social-links">` section
