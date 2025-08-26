@@ -1,0 +1,101 @@
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1R5F85N9YH"></script>
+<script>
+  // Google Analytics gtag initialization
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);} 
+  gtag('js', new Date());
+  gtag('config', 'G-1R5F85N9YH');
+</script>
+<script>
+  // Shared page logic: theme handling, stars animation, and minor interactions
+  document.addEventListener('DOMContentLoaded', function() {
+      // Persist current page language based on <html lang="..">
+      try {
+          const htmlLang = document.documentElement.getAttribute('lang') || 'en';
+          localStorage.setItem('lang', htmlLang);
+      } catch (e) {
+          // localStorage might be disabled; ignore
+      }
+
+      // Theme toggle functionality
+      const toggleBtn = document.getElementById('theme-toggle');
+      const body = document.body;
+
+      // 1. Check for saved theme preference
+      const savedTheme = (function(){
+          try { return localStorage.getItem('theme'); } catch(e) { return null; }
+      })();
+
+      // 2. If theme preference is saved, use it
+      if (savedTheme) {
+          body.classList.toggle('theme-light', savedTheme === 'light');
+          if (toggleBtn) toggleBtn.textContent = savedTheme === 'light' ? '🌞' : '🌙';
+      } else {
+          // 3. Otherwise, use system preference
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (!prefersDark) {
+              body.classList.add('theme-light');
+              if (toggleBtn) toggleBtn.textContent = '🌞';
+          }
+      }
+
+      // 4. Theme toggle button click handler
+      if (toggleBtn) {
+          toggleBtn.addEventListener('click', function() {
+              const isLight = body.classList.toggle('theme-light');
+              toggleBtn.textContent = isLight ? '🌞' : '🌙';
+              try { localStorage.setItem('theme', isLight ? 'light' : 'dark'); } catch(e) {}
+          });
+      }
+
+      // 5. Listen for system theme changes (only apply if user hasn't manually set a preference)
+      try {
+          const mm = window.matchMedia('(prefers-color-scheme: dark)');
+          if (mm && typeof mm.addEventListener === 'function') {
+              mm.addEventListener('change', function(e) {
+                  if (!localStorage.getItem('theme')) {
+                      const isDark = e.matches;
+                      body.classList.toggle('theme-light', !isDark);
+                      if (toggleBtn) toggleBtn.textContent = !isDark ? '🌞' : '🌙';
+                  }
+              });
+          }
+      } catch(e) {}
+
+      // Create stars
+      const starsContainer = document.getElementById('stars');
+      if (starsContainer) {
+          const starsCount = 100;
+          for (let i = 0; i < starsCount; i++) {
+              const star = document.createElement('div');
+              star.classList.add('star');
+
+              // Random position
+              const x = Math.random() * 100;
+              const y = Math.random() * 100;
+
+              // Random animation duration
+              const duration = 2 + Math.random() * 3;
+
+              // Random delay
+              const delay = Math.random() * 5;
+
+              star.style.left = `${x}%`;
+              star.style.top = `${y}%`;
+              star.style.setProperty('--duration', `${duration}s`);
+              star.style.animationDelay = `${delay}s`;
+
+              starsContainer.appendChild(star);
+          }
+      }
+
+      // Add glitch effect on image click (guard for missing image)
+      const profilePic = document.querySelector('.profile-pic');
+      if (profilePic) {
+          profilePic.addEventListener('click', function() {
+              this.style.filter = 'hue-rotate(90deg) contrast(1.5)';
+              setTimeout(() => { this.style.filter = 'none'; }, 500);
+          });
+      }
+  });
+</script>

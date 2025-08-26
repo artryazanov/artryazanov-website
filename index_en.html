@@ -21,15 +21,6 @@
         <!--# include virtual="/_partials/style.css" -->
     </style>
 </head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-1R5F85N9YH"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-1R5F85N9YH');
-</script>
 <body>
     <!-- Language Switcher -->
     <div class="lang-switcher">
@@ -89,84 +80,6 @@
         </footer>
     </div>
     
-    <!-- JavaScript for Star Animation and Theme Switching -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            localStorage.setItem('lang', 'en');
-            // Theme toggle functionality
-            const toggleBtn = document.getElementById('theme-toggle');
-            const body = document.body;
-            
-            // 1. Check for saved theme preference
-            const savedTheme = localStorage.getItem('theme');
-            
-            // 2. If theme preference is saved, use it
-            if (savedTheme) {
-                body.classList.toggle('theme-light', savedTheme === 'light');
-                toggleBtn.textContent = savedTheme === 'light' ? '🌞' : '🌙';
-            } else {
-                // 3. Otherwise, use system preference
-                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                if (!prefersDark) {
-                    body.classList.add('theme-light');
-                    toggleBtn.textContent = '🌞';
-                }
-            }
-            
-            // 4. Theme toggle button click handler
-            toggleBtn.addEventListener('click', function() {
-                const isLight = body.classList.toggle('theme-light');
-                toggleBtn.textContent = isLight ? '🌞' : '🌙';
-                localStorage.setItem('theme', isLight ? 'light' : 'dark');
-            });
-            
-            // 5. Listen for system theme changes
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
-                // Only apply if user hasn't manually set a preference
-                if (!localStorage.getItem('theme')) {
-                    const isDark = e.matches;
-                    body.classList.toggle('theme-light', !isDark);
-                    toggleBtn.textContent = !isDark ? '🌞' : '🌙';
-                }
-            });
-            
-            // Create stars
-            const starsContainer = document.getElementById('stars');
-            const starsCount = 100;
-            
-            for (let i = 0; i < starsCount; i++) {
-                const star = document.createElement('div');
-                star.classList.add('star');
-                
-                // Random position
-                const x = Math.random() * 100;
-                const y = Math.random() * 100;
-                
-                // Random animation duration
-                const duration = 2 + Math.random() * 3;
-                
-                // Random delay
-                const delay = Math.random() * 5;
-                
-                star.style.left = `${x}%`;
-                star.style.top = `${y}%`;
-                star.style.setProperty('--duration', `${duration}s`);
-                star.style.animationDelay = `${delay}s`;
-                
-                starsContainer.appendChild(star);
-            }
-            
-            // Add glitch effect on image click
-            const profilePic = document.querySelector('.profile-pic');
-            
-            profilePic.addEventListener('click', function() {
-                this.style.filter = 'hue-rotate(90deg) contrast(1.5)';
-                
-                setTimeout(() => {
-                    this.style.filter = 'none';
-                }, 500);
-            });
-        });
-    </script>
+    <!--# include virtual="/_partials/script.html" -->
 </body>
 </html>
