@@ -1,62 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Artem Ryazanov</title>
-    
+
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="manifest" href="site.webmanifest">
-    
+
+    <!--# include virtual="/_partials/style.shtml" -->
+
     <style>
         body {
-            margin: 0;
-            padding: 0;
-            background-color: #0a0c10;
-            color: #dfe0e4;
-            font-family: 'Arial', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             text-align: center;
+            overflow: hidden;
         }
-        
+
         .loading {
+            font-family: 'Orbitron', sans-serif;
             font-size: 24px;
-            color: #00fff0;
-            text-shadow: 0 0 5px #00fff0, 0 0 10px #00fff0;
+            color: var(--neon-blue);
+            text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue);
             animation: pulse 1.5s infinite alternate;
         }
-        
+
+        body.theme-light .loading {
+            color: var(--heading-color);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+        }
+
         @keyframes pulse {
             from {
-                text-shadow: 0 0 5px #00fff0, 0 0 10px #00fff0;
+                opacity: 0.8;
+                transform: scale(0.98);
             }
+
             to {
-                text-shadow: 0 0 10px #00fff0, 0 0 20px #00fff0, 0 0 30px #00fff0;
+                opacity: 1;
+                transform: scale(1.02);
             }
         }
     </style>
 </head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-1R5F85N9YH"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
 
-    gtag('config', 'G-1R5F85N9YH');
-</script>
 <body>
+    <!-- Star Background -->
+    <div class="stars" id="stars"></div>
+
     <div class="loading">Loading...</div>
-    
+
+    <!--# include virtual="/_partials/script.shtml" -->
+
     <script>
         // Language detection and redirection
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
+            // Delay redirection slightly so user can see the theme/loading state if they want, 
+            // or just to ensure scripts load. 
+            // However, typically redirects should be fast. 
+            // We'll keep it immediate but inside DOMContentLoaded.
+
             const savedLang = localStorage.getItem('lang');
             const validLangs = ['en', 'ru', 'th', 'zh', 'es', 'ar'];
             let targetPage;
@@ -83,8 +95,12 @@
             }
 
             // Redirect to the appropriate language page
-            window.location.href = targetPage;
+            // setTimeout to allow theme init to flash if needed, but 500ms is enough to look nice
+            setTimeout(() => {
+                window.location.href = targetPage;
+            }, 800);
         });
     </script>
 </body>
+
 </html>
