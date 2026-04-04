@@ -27,16 +27,21 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Deploy to COM server
+      - name: Set up Kamal secrets
         env:
           KAMAL_REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p .kamal
+          echo "KAMAL_REGISTRY_PASSWORD=$KAMAL_REGISTRY_PASSWORD" > .kamal/secrets-common
+
+      - name: Deploy to COM server
+        env:
           DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
           SERVER_IP_COM: ${{ secrets.SERVER_IP_COM }}
         run: kamal deploy --destination com
 
       #- name: Deploy to RU server
       #  env:
-      #    KAMAL_REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
       #    DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
       #    SERVER_IP_RU: ${{ secrets.SERVER_IP_RU }}
       #  run: kamal deploy --destination ru
