@@ -18,10 +18,10 @@ builder:
   arch: amd64
 
 # Common environment variables (if needed)
-env:
-  clear:
-    # You can add public variables here
-  secret:
-    # Secrets (e.g., tokens) go here
+# env:
+#   clear:
+#     # You can add public variables here
+#   secret:
+#     # Secrets (e.g., tokens) go here
 
 
