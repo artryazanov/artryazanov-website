@@ -1,0 +1,41 @@
+name: Deploy Website
+
+on:
+  push:
+    branches:
+      - main # Deploy on push to main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby (required for Kamal)
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.3
+          bundler-cache: true
+
+      - name: Install Kamal
+        run: gem install kamal
+
+      - name: Set up SSH key for servers
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy to COM server
+        env:
+          KAMAL_REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          SERVER_IP_COM: ${{ secrets.SERVER_IP_COM }}
+        run: kamal deploy --destination com
+
+      #- name: Deploy to RU server
+      #  env:
+      #    KAMAL_REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+      #    DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+      #    SERVER_IP_RU: ${{ secrets.SERVER_IP_RU }}
+      #  run: kamal deploy --destination ru

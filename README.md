@@ -1,12 +1,14 @@
 # Artem Ryazanov - Personal Website
 
+[![Deploy Website](https://github.com/artryazanov/artryazanov-website/actions/workflows/deploy.yml/badge.svg)](https://github.com/artryazanov/artryazanov-website/actions/workflows/deploy.yml)
+
 A multilingual personal website with a neon retro sci-fi design and an alternative beach theme, featuring interactive elements and automatic language detection.
 
 Visit the live website: [www.artryazanov.com](https://www.artryazanov.com)
 
 [![Website Preview](logo-240x240.png)](https://www.artryazanov.com)
 
-## Features
+## ✨ Features
 
 - **Dual Theme Design**:
   - Dark Theme: Neon retro sci-fi design with dark background and glowing neon elements
@@ -23,7 +25,7 @@ Visit the live website: [www.artryazanov.com](https://www.artryazanov.com)
 - **Project Showcase**: Displays personal projects with descriptions and links
 - **SSI Partials**: Shared CSS and JavaScript are included via Nginx SSI to avoid duplication across pages
 
-## Technologies Used
+## 💻 Technologies Used
 
 - HTML5
 - CSS3 (with CSS Variables, Animations, and Transitions)
@@ -35,7 +37,7 @@ Visit the live website: [www.artryazanov.com](https://www.artryazanov.com)
 - SVG for background patterns
 - Nginx Server-Side Includes (SSI) for partials
 
-## Server-Side Includes (SSI)
+## 🔌 Server-Side Includes (SSI)
 
 This site uses Nginx Server-Side Includes (SSI) to share common code between pages.
 
@@ -58,7 +60,7 @@ ssi on;
 ssi_types text/html;
 ```
 
-## Project Structure
+## 📁 Project Structure
 
 - `index.html` - Main entry point with language detection and redirection
 - `index_en.html` - English version
@@ -72,7 +74,7 @@ ssi_types text/html;
 - `logo-300x300.png` - Profile picture
 - Various favicon files for different platforms
 
-## Language Support
+## 🌐 Language Support
 
 The website automatically detects the user's browser language and redirects to the appropriate language version. Currently supported languages:
 
@@ -85,7 +87,7 @@ The website automatically detects the user's browser language and redirects to t
 
 Users can manually switch between languages using the language switcher in the top-right corner (top-left for Arabic).
 
-## Theme Support
+## 🎨 Theme Support
 
 The website features two distinct themes:
 
@@ -107,7 +109,7 @@ The theme system includes:
 - System theme preference detection
 - Smooth transitions between themes
 
-## Installation and Usage
+## 🚀 Installation and Usage
 
 1. Clone or download this repository
 2. Open `index.html` in your web browser
@@ -115,7 +117,25 @@ The theme system includes:
 
 To see SSI includes (style.shtml and script.shtml) rendered, serve the site via Nginx with SSI enabled (ssi on; ssi_types text/html;) or any SSI-enabled server. Opening HTML files directly via file:// will not process SSI directives.
 
-## Customization
+## 🚢 Deployment
+
+The project is configured for automated deployment using [Kamal](https://kamal-deploy.org/) and GitHub Actions.
+
+### Deployment Configuration
+
+- `Dockerfile`: Packages the website with a lightweight Nginx image and enables SSI.
+- `nginx.conf`: Nginx server configuration for the Docker container.
+- `config/deploy.yml`: Kamal configuration detailing the deployment destinations (`.com` and `.ru` domains) and server IPs.
+- `.github/workflows/deploy.yml`: GitHub Actions workflow that automatically triggers a deployment to both servers on every push to the `main` branch.
+
+### Setup for Deployment
+
+1. Set the correct server IP addresses in `config/deploy.yml`.
+2. Add your server SSH private key to the repository secrets as `SSH_PRIVATE_KEY`.
+3. The GitHub Actions workflow will automatically use the standard `GITHUB_TOKEN` for pushing images to the GitHub Container Registry (GHCR).
+4. Committing and pushing changes to the `main` branch will automatically deploy the site.
+
+## ⚙️ Customization
 
 ### Changing Personal Information
 
@@ -144,12 +164,12 @@ To add a new language:
 4. Add the language to the switcher in all HTML files
 5. Update the language detection script in `index.html`
 
-## Credits
+## 🙌 Credits
 
 - Fonts: [Google Fonts](https://fonts.google.com/)
 - Icons: [Font Awesome](https://fontawesome.com/)
 - Design inspiration: Neon retro sci-fi aesthetics and beach themes
 
-## License
+## 📄 License
 
 © 2025 Artem Ryazanov. All rights reserved.
