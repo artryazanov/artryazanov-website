@@ -1,0 +1,9 @@
+# Settings for .com server
+servers:
+  # Hidden IP address for .com server
+  - <%= ENV['SERVER_IP_COM'] %>
+proxy:
+  ssl: true
+  hosts:
+    - artryazanov.com
+    - www.artryazanov.com

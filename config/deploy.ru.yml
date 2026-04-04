@@ -1,0 +1,9 @@
+# Settings for .ru server
+servers:
+  # Hidden IP address for .ru server
+  - <%= ENV['SERVER_IP_RU'] %>
+proxy:
+  ssl: true
+  hosts:
+    - artryazanov.ru
+    - www.artryazanov.ru
