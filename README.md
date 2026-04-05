@@ -119,21 +119,19 @@ To see SSI includes (style.shtml and script.shtml) rendered, serve the site via 
 
 ## 🚢 Deployment
 
-The project is configured for automated deployment using [Kamal](https://kamal-deploy.org/) and GitHub Actions.
+The project is configured for an automated GitOps deployment using GitHub Actions and Docker Swarm.
 
 ### Deployment Configuration
 
 - `Dockerfile`: Packages the website with a lightweight Nginx image and enables SSI.
-- `nginx.conf`: Nginx server configuration for the Docker container.
-- `config/deploy.yml`: Kamal configuration detailing the deployment destinations (`.com` and `.ru` domains) and server IPs.
-- `.github/workflows/deploy.yml`: GitHub Actions workflow that automatically triggers a deployment to both servers on every push to the `main` branch.
+- `nginx.conf`: Custom Nginx configuration built into the Docker container.
+- `.github/workflows/deploy.yml`: GitHub Actions workflow that automatically builds the Docker image and pushes it to GitHub Container Registry (GHCR) as `ghcr.io/artryazanov/artryazanov-website:latest` on every push to the `main` branch.
 
 ### Setup for Deployment
 
-1. Set the correct server IP addresses in `config/deploy.yml`.
-2. Add your server SSH private key to the repository secrets as `SSH_PRIVATE_KEY`.
-3. The GitHub Actions workflow will automatically use the standard `GITHUB_TOKEN` for pushing images to the GitHub Container Registry (GHCR).
-4. Committing and pushing changes to the `main` branch will automatically deploy the site.
+1. The GitHub Actions workflow will automatically use the standard `GITHUB_TOKEN` to push images to the GitHub Container Registry (GHCR). No custom secrets are needed.
+2. Committing and pushing changes to the `main` branch will automatically build and publish the new Docker image.
+3. Your external Docker Swarm infrastructure (orchestrator) will automatically detect the new image on GHCR using `Shepherd` and seamlessly perform a zero-downtime rolling update.
 
 ## ⚙️ Customization
 
