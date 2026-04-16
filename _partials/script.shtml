@@ -75,14 +75,27 @@
               const y = Math.random() * 100;
 
               // Random animation duration
-              const duration = 2 + Math.random() * 3;
+              const duration = 2 + Math.random() * 4;
 
               // Random delay
               const delay = Math.random() * 5;
 
+              // Random size
+              let sizeRnd = Math.random();
+              let size;
+              if (sizeRnd > 0.95) size = 4 + Math.random() * 2; // 5% very large (4-6px)
+              else if (sizeRnd > 0.8) size = 2 + Math.random() * 2; // 15% medium (2-4px)
+              else size = 1 + Math.random() * 1; // 80% small (1-2px)
+
+              if (Math.random() > 0.9) {
+                  star.classList.add('star-flash');
+                  star.style.setProperty('--flash-duration', `${4 + Math.random() * 6}s`);
+              }
+
               star.style.left = `${x}%`;
               star.style.top = `${y}%`;
               star.style.setProperty('--duration', `${duration}s`);
+              star.style.setProperty('--star-size', `${size}px`);
               star.style.animationDelay = `${delay}s`;
 
               starsContainer.appendChild(star);
