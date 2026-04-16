@@ -111,11 +111,33 @@ The theme system includes:
 
 ## 🚀 Installation and Usage
 
+### Local Usage
+
 1. Clone or download this repository
 2. Open `index.html` in your web browser
 3. The site will automatically redirect to the appropriate language version based on your browser settings
 
-To see SSI includes (style.shtml and script.shtml) rendered, serve the site via Nginx with SSI enabled (ssi on; ssi_types text/html;) or any SSI-enabled server. Opening HTML files directly via file:// will not process SSI directives.
+*Note: Opening HTML files directly via `file://` will not process SSI directives, so some shared components (like styles and scripts) might not load correctly.*
+
+### Running Locally with Docker (Recommended)
+
+To see SSI includes (`style.shtml` and `script.shtml`) rendered properly, you can spin up the project locally using Docker. This accurately simulates the production Nginx environment.
+
+1. Build the Docker image:
+   ```bash
+   docker build -t my-website .
+   ```
+2. Run the container, mapping port 80 to your local port 8080:
+   ```bash
+   docker run -d -p 8080:80 --name my-website-test my-website
+   ```
+3. Open your browser and navigate to **[http://localhost:8080](http://localhost:8080)**.
+
+To stop and remove the container when you're done:
+```bash
+docker stop my-website-test
+docker rm my-website-test
+```
 
 ## 🚢 Deployment
 
